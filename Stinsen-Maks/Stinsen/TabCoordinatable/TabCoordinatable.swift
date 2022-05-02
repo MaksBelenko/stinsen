@@ -91,13 +91,33 @@ public extension TabCoordinatable {
     }
 
     func view() -> AnyView {
-        AnyView(
-            TabCoordinatableView(
+        return AnyView(
+            CustomTabCoordinatableView(
                 paths: self.child.startingItems,
                 coordinator: self,
                 customize: customize
             )
         )
+    }
+    
+    func view(style: TabStyle = .standard) -> AnyView {
+        if style == .teleprom {
+            return AnyView(
+                CustomTabCoordinatableView(
+                    paths: self.child.startingItems,
+                    coordinator: self,
+                    customize: customize
+                )
+            )
+        } else {
+            return AnyView(
+                TabCoordinatableView(
+                    paths: self.child.startingItems,
+                    coordinator: self,
+                    customize: customize
+                )
+            )
+        }
     }
     
     @discardableResult func focusFirst<Output: Coordinatable>(
