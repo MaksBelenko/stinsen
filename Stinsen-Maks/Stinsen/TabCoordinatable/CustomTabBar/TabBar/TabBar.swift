@@ -33,7 +33,6 @@ struct TabBar<Selection>: View where Selection: Hashable {
         .background(
             VisualEffectBlurView(blurStyle: .systemUltraThinMaterialDark)
                 .edgesIgnoringSafeArea(.all)
-//                .ignoresSafeArea()
         )
     }
 }
