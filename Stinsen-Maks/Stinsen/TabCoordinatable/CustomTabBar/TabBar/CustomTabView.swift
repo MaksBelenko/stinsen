@@ -12,6 +12,7 @@ struct CustomTabView<SelectionValue, Content> : View where SelectionValue: Hasha
     @State private var tabs = [AnyTabView]()
     private let content: Content
     private var selectionObservable: TabBarSelection<SelectionValue>
+    @StateObject private var tabBarStateManager = TabBarStateManager()
     
     init(selection: Binding<SelectionValue>, @ViewBuilder content: () -> Content) {
         self.content = content()
@@ -26,6 +27,7 @@ struct CustomTabView<SelectionValue, Content> : View where SelectionValue: Hasha
                 TabBar<SelectionValue>(tabViews: tabs)
             }
         }
+        .environmentObject(tabBarStateManager)
         .environmentObject(selectionObservable)
         .onPreferenceChange(TabBarItemsPreferenceKey.self) { value in
             self.tabs = value

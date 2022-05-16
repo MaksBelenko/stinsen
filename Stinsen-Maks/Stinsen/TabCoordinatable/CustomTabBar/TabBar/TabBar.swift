@@ -12,6 +12,7 @@ struct TabBar<Selection>: View where Selection: Hashable {
     let barHeight: CGFloat = 55
     let tabViews: [AnyTabView]
     @EnvironmentObject private var selectionObject: TabBarSelection<Selection>
+    @EnvironmentObject private var tabBarStateManager: TabBarStateManager
     
     var body: some View {
         HStack {
@@ -28,11 +29,40 @@ struct TabBar<Selection>: View where Selection: Hashable {
 //                                }
                             }
                     )
+                    .offset(getOffset(tab: anyTab.tab as! Int))
+                    .opacity(getOpacity(tab: anyTab.tab as! Int))
             }
         }
         .background(
             VisualEffectBlurView(blurStyle: .systemUltraThinMaterialDark)
                 .edgesIgnoringSafeArea(.all)
+                .offset(getOffset(tab: 0))
+                .opacity(getOpacity(tab: 0))
         )
+        .animation(.easeOut(duration: 0.3), value: tabBarStateManager.state)
+    }
+    
+    func getOffset(tab: Int) -> CGSize {
+        switch tabBarStateManager.state {
+        case .fullyShown:
+            return CGSize(width: 0 , height: 0)
+        case .hidden:
+            return CGSize(width: 0, height: 150)
+        case.onlyRecordingButton:
+            if tab == 1 { return CGSize(width: 0 , height: 0) }
+            return CGSize(width: 0, height: 150)
+        }
+    }
+    
+    func getOpacity(tab: Int) -> Double {
+        switch tabBarStateManager.state {
+        case .fullyShown:
+            return 1
+        case .hidden:
+            return 0
+        case.onlyRecordingButton:
+            if tab == 1 { return 1 }
+            return 0
+        }
     }
 }

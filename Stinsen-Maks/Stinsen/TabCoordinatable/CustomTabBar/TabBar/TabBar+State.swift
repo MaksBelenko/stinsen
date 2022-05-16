@@ -9,6 +9,7 @@ import Foundation
 
 public enum TabBarState {
     case fullyShown
+    case onlyRecordingButton
     case hidden
 }
 
