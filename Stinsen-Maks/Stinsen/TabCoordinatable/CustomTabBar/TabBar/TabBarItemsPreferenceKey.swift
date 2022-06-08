@@ -24,6 +24,13 @@ struct TabBarItemViewModifier<Selection, TabViewType>: ViewModifier where Select
     @EnvironmentObject private var selectionObject: TabBarSelection<Selection>
     
     func body(content: TabBarItemViewModifier.Content) -> some View {
+//        Group {
+//            if tab == selectionObject.selection {
+//                content
+//            } else {
+//                Color.clear
+//            }
+//        }
         content
             .opacity(selectionObject.selection == tab ? 1 : 0)
             .preference(

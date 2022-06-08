@@ -7,9 +7,9 @@
 
 import Foundation
 
-public enum TabBarState {
+public enum TabBarState: Equatable {
     case fullyShown
-    case onlyRecordingButton
+    case onlyTab(Int)
     case hidden
 }
 

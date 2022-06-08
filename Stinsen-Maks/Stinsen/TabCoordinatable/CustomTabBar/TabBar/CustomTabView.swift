@@ -20,17 +20,22 @@ struct CustomTabView<SelectionValue, Content> : View where SelectionValue: Hasha
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            ZStack(alignment: .bottom) {
-                content
-                
-                TabBar<SelectionValue>(tabViews: tabs)
+        if #available(iOS 14.0, *) {
+            VStack(spacing: 0) {
+                ZStack(alignment: .bottom) {
+                    content
+                    
+                    TabBar<SelectionValue>(tabViews: tabs)
+                }
             }
-        }
-        .environmentObject(tabBarStateManager)
-        .environmentObject(selectionObservable)
-        .onPreferenceChange(TabBarItemsPreferenceKey.self) { value in
-            self.tabs = value
+            .ignoresSafeArea(.keyboard)
+            .environmentObject(tabBarStateManager)
+            .environmentObject(selectionObservable)
+            .onPreferenceChange(TabBarItemsPreferenceKey.self) { value in
+                self.tabs = value
+            }
+        } else {
+            // Fallback on earlier versions
         }
     }
 }

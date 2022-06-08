@@ -48,8 +48,8 @@ struct TabBar<Selection>: View where Selection: Hashable {
             return CGSize(width: 0 , height: 0)
         case .hidden:
             return CGSize(width: 0, height: 150)
-        case.onlyRecordingButton:
-            if tab == 1 { return CGSize(width: 0 , height: 0) }
+        case .onlyTab(let tabNumber):
+            if tab == tabNumber { return CGSize(width: 0 , height: 0) }
             return CGSize(width: 0, height: 150)
         }
     }
@@ -60,8 +60,8 @@ struct TabBar<Selection>: View where Selection: Hashable {
             return 1
         case .hidden:
             return 0
-        case.onlyRecordingButton:
-            if tab == 1 { return 1 }
+        case .onlyTab(let tabNumber):
+            if tab == tabNumber { return 1 }
             return 0
         }
     }
